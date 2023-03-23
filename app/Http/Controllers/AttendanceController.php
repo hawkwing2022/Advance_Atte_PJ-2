@@ -20,7 +20,10 @@ class AttendanceController extends Controller
 
     public function start(Request $request)
     {
-        return view('index', $request);
+        $form->user_id = Auth::id();
+        $form->date = date_format(Carbon::now(), 'Ymd' );
+        Attendance::create($request);
+        return redirect('/');
     }
 
     public function end(Request $request)
@@ -28,11 +31,11 @@ class AttendanceController extends Controller
         return view('index', $request);
     }
 
-    public function date(Request $request)
+    public function list(Request $request)
     {
         $date = $request->yyyymmdd;
         $data = Attendance::where('date')->paginate(5);
-        return view('date', ['yyyymmdd'=>$date]);
+        return view('list', ['yyyymmdd'=>$date]);
     }
 
     public function page(Request $request)

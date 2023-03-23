@@ -20,11 +20,11 @@ use App\Http\Controllers\RestController;
 // });
 
 Route::get('/', [AttendanceController::class, 'index'])->middleware(['auth'])->name('index');
-Route::post('/work/start', [AttendanceController::class, 'start']);
-Route::post('/work/end', [AttendanceController::class, 'end']);
-Route::post('/rest/start', [RestController::class, 'start']);
-Route::post('/rest/end', [RestController::class, 'end']);
-Route::get('/list/{yyyymmdd}', [AttendanceController::class, 'date'])->middleware(['auth'])->name('list');
+Route::post('/work/start', [AttendanceController::class, 'start'])->middleware(['auth']);
+Route::post('/work/end', [AttendanceController::class, 'end'])->middleware(['auth']);
+Route::post('/rest/start', [RestController::class, 'start'])->middleware(['auth']);
+Route::post('/rest/end', [RestController::class, 'end'])->middleware(['auth']);
+Route::get('/list/{yyyymmdd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
 Route::get('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
 
 Route::get('/dashboard', function () {
