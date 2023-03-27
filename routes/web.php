@@ -15,9 +15,6 @@ use App\Http\Controllers\RestController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::get('/', [AttendanceController::class, 'index'])->middleware(['auth'])->name('index');
 Route::post('/work/start', [AttendanceController::class, 'start'])->middleware(['auth']);
@@ -26,6 +23,9 @@ Route::post('/rest/start', [RestController::class, 'start'])->middleware(['auth'
 Route::post('/rest/end', [RestController::class, 'end'])->middleware(['auth']);
 Route::get('/list/{yyyymmdd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
 Route::get('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
+Route::get('login', [AttendanceController::class, 'login']);
+Route::post('login', [AttendanceController::class, 'checkUser']);
+Route::get('register', [AttendanceController::class, 'register']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

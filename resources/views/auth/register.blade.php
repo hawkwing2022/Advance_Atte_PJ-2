@@ -1,59 +1,31 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.default')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('header')
+@endsection
+@section('main')
+<div class="card">
+  <div class="title">
+    <p>会員登録</p>
+  </div>
+  <!-- Session Status -->
+  <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+  <!-- Validation Errors -->
+  <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+  <form class="register_form" method="POST" action="{{ route('register') }}">
+    @csrf
+    <input class="box input_box" type="text" name="name" placeholder="名前" :value="old('name')" required autofocus />
+    <input class="box input_box" type="email" name="email" placeholder="メールアドレス" :value="old('email')" required />
+    <input class="box input_box" type="password" name="password" placeholder="パスワード" required autocomplete="new-password" />
+    <input class="box input_box" type="password" name="password_confirmation" placeholder="確認用パスワード" required/>
+    <button class="box auth_btn">会員登録</button>
+  </form>
+  <div class="box redirect_msg">
+    <p class="redirect_msg">アカウントをお持ちの方はこちらから</p>
+    <a href="/login">ログイン</a>
+  </div>
+</div>
+@endsection
+@section('footer')
+@endsection

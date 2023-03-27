@@ -26,7 +26,7 @@
 <div class="buttons">
   <form method="POST" action="work/start">
     @csrf
-    <button class="work_start">勤務開始</button>
+    <button class="work_start" @if(isset($end_time) and is_null($end_time)) disabled @endif>勤務開始</button>
   </form>
   <form method="POST" action="work/end">
     @csrf

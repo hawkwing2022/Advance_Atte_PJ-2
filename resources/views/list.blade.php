@@ -20,7 +20,16 @@
 </div>
 @endsection
 @section('main')
-{{$yyyymmdd}}
+<form class="date_change_btn_form" method="POST" action="/list/$yyyymmdd">
+  @csrf
+  <button class="date_change_btn">＜</button>
+</form>
+  <p class="date_title">{{$yyyymmdd}}</p>
+<form class="date_change_btn_form" method="POST" action="/list/$yyyymmdd">
+  @csrf
+  <button class="date_change_btn">＞</button>
+</form>
+
 @endsection
 @section('footer')
 @endsection
