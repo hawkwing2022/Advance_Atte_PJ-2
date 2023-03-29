@@ -17,7 +17,7 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $user_name = $user->name;
         $yyyymmdd = date_format(Carbon::now(), 'Ymd' );
-        $param = Attendance::where('user_id', '=', $user->id)->get();
+        $param = Attendance::where([['user_id', '=', $user->id],['date', '=', $yyyymmdd],])->get();
         $param = ['user_name'=>$user_name, 'yyyymmdd'=>$yyyymmdd];
         return view('index', $param);
     }
