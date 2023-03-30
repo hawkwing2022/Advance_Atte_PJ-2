@@ -26,19 +26,19 @@
 <div class="buttons">
   <form method="POST" action="work/start">
     @csrf
-    <button class="work_start" @if(isset($end_time) and is_null($end_time)) disabled @endif>勤務開始</button>
+    <button class="work_start" {{$flag_wstart}}>勤務開始</button>
   </form>
   <form method="POST" action="work/end">
     @csrf
-    <button class="work_end">勤務終了</button>
+    <button class="work_end" {{$flag_wend}}>勤務終了</button>
   </form>
   <form method="POST" action="rest/start">
     @csrf
-    <button class="rest_start">休憩開始</button>
+    <button class="rest_start" {{$flag_rstart}}>休憩開始</button>
   </form>
   <form method="POST" action="rest/end">
     @csrf
-    <button class="rest_end">休憩終了</button>
+    <button class="rest_end" {{$flag_rend}}>休憩終了</button>
   </form>
 </div>
 @endsection

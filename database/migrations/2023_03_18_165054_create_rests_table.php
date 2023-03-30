@@ -17,7 +17,7 @@ class CreateRestsTable extends Migration
             $table->id();
             $table->foreignId('attendance_id');
             $table->timestamp('start_time')->useCurrent()->nullable();
-            $table->timestamp('end_time')->useCurrent();
+            $table->timestamp('end_time')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

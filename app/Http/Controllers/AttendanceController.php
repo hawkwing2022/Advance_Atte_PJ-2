@@ -17,8 +17,38 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $user_name = $user->name;
         $yyyymmdd = date_format(Carbon::now(), 'Ymd' );
-        $param = Attendance::where([['user_id', '=', $user->id],['date', '=', $yyyymmdd],])->get();
-        $param = ['user_name'=>$user_name, 'yyyymmdd'=>$yyyymmdd];
+        $yyyy_mm_dd = date_format(Carbon::now(), 'Y-m-d' );
+        $param = Attendance::where([
+            ['user_id', '=', $user->id],
+            ['date', '=', $yyyy_mm_dd]
+            ])->get();
+        if(Attendance::where([
+            ['user_id', '=', $user->id],
+            ['date', '=', $yyyy_mm_dd]
+            ])->count() == 0){
+                $flag_wstart = '';
+                $flag_wend = 'disabled';
+                $flag_rstart = 'disabled';
+                $flag_rend = 'disabled';
+            }elseif($param->end_time != null){
+                $flag_wstart = 'disabled';
+                $flag_wend = 'disabled';
+                $flag_rstart = 'disabled';
+                $flag_rend = 'disabled';
+            }else{
+                $flag_wstart = 'disabled';
+                $flag_wend = '';
+                $flag_rstart = '';
+                $flag_rend = '';
+            };
+        $param = [
+            'user_name'=>$user_name, 
+            'yyyymmdd'=>$yyyymmdd , 
+            'flag_wstart'=>$flag_wstart,
+            'flag_wend'=>$flag_wend,
+            'flag_rstart'=>$flag_rstart,
+            'flag_rend'=>$flag_rend,
+        ];
         return view('index', $param);
     }
 
