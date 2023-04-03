@@ -21,7 +21,7 @@ Route::post('/work/start', [AttendanceController::class, 'start'])->middleware([
 Route::post('/work/end', [AttendanceController::class, 'end'])->middleware(['auth']);
 Route::post('/rest/start', [RestController::class, 'start'])->middleware(['auth']);
 Route::post('/rest/end', [RestController::class, 'end'])->middleware(['auth']);
-Route::get('/list/{yyyymmdd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
+Route::get('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
 Route::get('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
 Route::get('login', [AttendanceController::class, 'login']);
 Route::post('login', [AttendanceController::class, 'checkUser']);

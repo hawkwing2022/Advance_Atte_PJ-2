@@ -7,7 +7,7 @@
       <a href="{{ route('index') }}">ホーム</a>
     </li>
     <li class="list_link">
-      <a href="{{ route('list', ['yyyymmdd'=>$yyyymmdd]) }}">日付一覧</a>
+      <a href="{{ route('list', ['yyyy_mm_dd'=>$yyyy_mm_dd]) }}">日付一覧</a>
     </li>
     <li class="logout_link">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -20,8 +20,8 @@
 </div>
 @endsection
 @section('main')
-<div class="greeting">
-  <p>{{ $user_name }}さんお疲れ様です！</p>
+<div class="content_title">
+  <p class="date_title">{{ $user_name }}さんお疲れ様です！</p>
 </div>
 <div class="buttons">
   <form method="POST" action="work/start">

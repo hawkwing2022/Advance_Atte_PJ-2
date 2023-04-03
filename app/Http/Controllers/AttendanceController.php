@@ -18,10 +18,6 @@ class AttendanceController extends Controller
         $user_name = $user->name;
         $yyyymmdd = date_format(Carbon::now(), 'Ymd' );
         $yyyy_mm_dd = date_format(Carbon::now(), 'Y-m-d' );
-        $param = Attendance::where([
-            ['user_id', '=', $user->id],
-            ['date', '=', $yyyy_mm_dd]
-            ])->get();
         if(Attendance::where([
             ['user_id', '=', $user->id],
             ['date', '=', $yyyy_mm_dd]
@@ -30,7 +26,12 @@ class AttendanceController extends Controller
                 $flag_wend = 'disabled';
                 $flag_rstart = 'disabled';
                 $flag_rend = 'disabled';
-            }elseif($param->end_time != null){
+            }
+            elseif(
+            Attendance::where([
+            ['user_id', '=', $user->id],
+            ['date', '=', $yyyy_mm_dd]
+            ])->whereNull('end_time')->count() ==0){
                 $flag_wstart = 'disabled';
                 $flag_wend = 'disabled';
                 $flag_rstart = 'disabled';
@@ -43,7 +44,7 @@ class AttendanceController extends Controller
             };
         $param = [
             'user_name'=>$user_name, 
-            'yyyymmdd'=>$yyyymmdd , 
+            'yyyy_mm_dd'=>$yyyy_mm_dd , 
             'flag_wstart'=>$flag_wstart,
             'flag_wend'=>$flag_wend,
             'flag_rstart'=>$flag_rstart,
@@ -56,23 +57,31 @@ class AttendanceController extends Controller
     {
         $user_id = Auth::id();
         $date = date_format(Carbon::now(), 'Ymd' );
-        $form = ['user_id'=>$user_id, 'date'=>$date];
+        $start_time = date_format(Carbon::now(), 'H:i:s');
+        $form = ['user_id'=>$user_id, 'date'=>$date, 'start_time'=>$start_time ];
         Attendance::create($form);
         return redirect('/');
     }
 
     public function end(Request $request)
     {
-        $end_time = Carbon::now();
-        // Attendance::where()
-        return view('index', $request);
+        $user_id = Auth::id();
+        $yyyy_mm_dd = date_format(Carbon::now(), 'Y-m-d' );
+        $end_time = date_format(Carbon::now(), 'H:i:s');
+        Attendance::where([
+            ['user_id','=',$user_id],
+            ['date', '=', $yyyy_mm_dd]
+            ])->update(['end_time'=>$end_time]);
+        return redirect('/');
     }
 
     public function list(Request $request)
     {
-        $date = $request->yyyymmdd;
-        $data = Attendance::where('date')->paginate(5);
-        return view('list', ['yyyymmdd'=>$date]);
+        $date = $request->yyyy_mm_dd;
+        $attendances = Attendance::where('date', '=', $date)->cursorPaginate(5);
+        $attendances->appends(['sort'=>'user_id']);
+        $param = ['attendances'=>$attendances, 'yyyy_mm_dd'=>$date];
+        return view('list', $param);
     }
 
     public function page(Request $request)
