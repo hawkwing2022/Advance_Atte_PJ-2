@@ -21,12 +21,13 @@
 @endsection
 @section('main')
 <div class="content_title">
-  <form class="date_change_btn_form" method="POST" action="/list/$yyyy_mm_dd">
+  <form class="date_change_btn_form" method="GET" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd -1 day")) ]) }}">
     @csrf
     <button class="date_change_btn">＜</button>
   </form>
   <p class="date_title">{{$yyyy_mm_dd}}</p>
-  <form class="date_change_btn_form" method="POST" action="/list/$yyyy_mm_dd">
+
+  <form class="date_change_btn_form" method="GET" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd +1 day")) ]) }}">
     @csrf
     <button class="date_change_btn">＞</button>
   </form>
@@ -34,19 +35,24 @@
 <div class="list_content">
   <table class="list_cont_table">
     <tr>
-      <th class="name">名前</th>
-      <th class="time">勤務開始</th>
-      <th class="time">勤務完了</th>
-      <th class="time">休憩時間</th>
-      <th class="time">勤務時間</th>
+      <th>名前</th>
+      <th>勤務開始</th>
+      <th>勤務完了</th>
+      <th>休憩時間</th>
+      <th>勤務時間</th>
     </tr>
+
     @foreach($attendances as $attendance)
     <tr>
       <td>{{ $attendance->user->getName() }}</td>
       <td>{{ $attendance->start_time }}</td>
       <td>{{ $attendance->end_time}}</td>
       <td>{{ $attendance->rest_period}}</td>
-      <td>{{ $attendance->work_period }}</td>
+      <td>@if($attendance->end_time != null )
+        <?php date_default_timezone_set('UTC') ?>
+        {{ date('H:i:s', (strtotime($attendance->end_time) - strtotime($attendance->start_time)) ) }}@else 打刻漏れ
+        <?php date_default_timezone_set('Asia/Tokyo') ?>
+        @endif</td>
     </tr>
     @endforeach
   </table>
@@ -54,7 +60,6 @@
 <div class="paginate">
   {{ $attendances -> links() }}
 </div>
-
 @endsection
 @section('footer')
 @endsection

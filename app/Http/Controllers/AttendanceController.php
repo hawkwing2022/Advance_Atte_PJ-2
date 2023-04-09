@@ -78,8 +78,7 @@ class AttendanceController extends Controller
     public function list(Request $request)
     {
         $date = $request->yyyy_mm_dd;
-        $attendances = Attendance::where('date', '=', $date)->cursorPaginate(5);
-        $attendances->appends(['sort'=>'user_id']);
+        $attendances = Attendance::where('date', '=', $date)->orderBy('user_id')->Paginate(5);
         $param = ['attendances'=>$attendances, 'yyyy_mm_dd'=>$date];
         return view('list', $param);
     }

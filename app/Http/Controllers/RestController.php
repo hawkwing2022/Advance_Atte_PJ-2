@@ -10,11 +10,11 @@ class RestController extends Controller
 {
     public function start(Request $request)
     {
-        $attendance_id = Attendance::where();
-        $date = date_format(Carbon::now(), 'Ymd' );
-        $form = ['user_id'=>$user_id, 'date'=>$date];
+        $user_id = Auth::id();
+        $start_time = date_format(Carbon::now(), 'H:i:s');
+        $form = ['date'=>$date, 'start_time'=>$start_time ];
         Attendance::create($form);
-        return ('index');
+        return redirect('/');
     }
 
     public function end(Reqeust $request)
