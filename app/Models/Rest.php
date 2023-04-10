@@ -15,4 +15,10 @@ class Rest extends Model
     {
         return $this->belongsTo('App\Models\Attendance');
     }
+
+    public function chkNotFilledRestEnd(Request $request)
+    {
+        $boolean = Rest::where($request)->whereNull('end_time')->count() != 0;
+        return $boolean;
+    }
 }

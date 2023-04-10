@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use APP\Models\User;
+use APP\Models\Rest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -26,22 +27,36 @@ class AttendanceController extends Controller
                 $flag_wend = 'disabled';
                 $flag_rstart = 'disabled';
                 $flag_rend = 'disabled';
-            }
-            elseif(
-            Attendance::where([
-            ['user_id', '=', $user->id],
-            ['date', '=', $yyyy_mm_dd]
-            ])->whereNull('end_time')->count() ==0){
-                $flag_wstart = 'disabled';
-                $flag_wend = 'disabled';
-                $flag_rstart = 'disabled';
-                $flag_rend = 'disabled';
-            }else{
-                $flag_wstart = 'disabled';
-                $flag_wend = '';
-                $flag_rstart = '';
-                $flag_rend = '';
-            };
+            }elseif(
+                Attendance::where([
+                    ['user_id', '=', $user->id],
+                    ['date', '=', $yyyy_mm_dd]
+                    ])->whereNull('end_time')->count() ==0){
+                        $flag_wstart = 'disabled';
+                        $flag_wend = 'disabled';
+                        $flag_rstart = 'disabled';
+                        $flag_rend = 'disabled';
+                    }elseif(
+                        Attendance::where([
+                            ['user_id', '=', $user->id],
+                            ['date', '=', $yyyy_mm_dd]
+                            ])->rest != null
+                        ){
+                            if(Attendance::where([
+                                ['user_id', '=', $user->id],
+                                ['date', '=', $yyyy_mm_dd]
+                                ])->rest->chkNotFilledRestEnd()){
+                                    $flag_wstart = 'disabled';
+                                    $flag_wend = '';
+                                    $flag_rstart = 'disabled';
+                                    $flag_rend = '';
+                                }
+                            }else{
+                                    $flag_wstart = 'disabled';
+                                    $flag_wend = '';
+                                    $flag_rstart = '';
+                                    $flag_rend = 'disabled';
+                                };
         $param = [
             'user_name'=>$user_name, 
             'yyyy_mm_dd'=>$yyyy_mm_dd , 
