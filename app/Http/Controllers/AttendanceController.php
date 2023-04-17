@@ -19,45 +19,53 @@ class AttendanceController extends Controller
         $user_name = $user->name;
         $yyyymmdd = date_format(Carbon::now(), 'Ymd' );
         $yyyy_mm_dd = date_format(Carbon::now(), 'Y-m-d' );
-        if(Attendance::where([
+        $attendances = Attendance::where([
             ['user_id', '=', $user->id],
             ['date', '=', $yyyy_mm_dd]
-            ])->count() == 0){
-                $flag_wstart = '';
-                $flag_wend = 'disabled';
-                $flag_rstart = 'disabled';
+        ])->get();
+        $flag_wstart = '';
+        $flag_wend = '';
+        $flag_rstart = '';
+        $flag_rend = '';
+        if($attendances->count() == 0){
+            $attendance_id = null;
+            $flag_wend = 'disabled';
+            $flag_rstart = 'disabled';
+            $flag_rend = 'disabled';
+        }elseif ($attendances->whereNull('end_time')->count() ==0){
+            $attendance_id = $attendances->first()->id;
+            $flag_wstart = 'disabled';
+            $flag_wend = 'disabled';
+            $flag_rstart = 'disabled';
+            $flag_rend = 'disabled';
+        }elseif(Attendance::where([
+            ['user_id', '=', $user->id],
+            ['date', '=', $yyyy_mm_dd]
+            ])->has('rest')->count() == 0){
+                $attendance_id = $attendances->first()->id;
+                $flag_wstart = 'disabled';
                 $flag_rend = 'disabled';
-            }elseif(
-                Attendance::where([
-                    ['user_id', '=', $user->id],
-                    ['date', '=', $yyyy_mm_dd]
-                    ])->whereNull('end_time')->count() ==0){
-                        $flag_wstart = 'disabled';
-                        $flag_wend = 'disabled';
-                        $flag_rstart = 'disabled';
-                        $flag_rend = 'disabled';
-                    }elseif(
-                        Attendance::where([
-                            ['user_id', '=', $user->id],
-                            ['date', '=', $yyyy_mm_dd]
-                            ])->rest != null
-                        ){
-                            if(Attendance::where([
-                                ['user_id', '=', $user->id],
-                                ['date', '=', $yyyy_mm_dd]
-                                ])->rest->chkNotFilledRestEnd()){
-                                    $flag_wstart = 'disabled';
-                                    $flag_wend = '';
-                                    $flag_rstart = 'disabled';
-                                    $flag_rend = '';
-                                }
-                            }else{
-                                    $flag_wstart = 'disabled';
-                                    $flag_wend = '';
-                                    $flag_rstart = '';
-                                    $flag_rend = 'disabled';
-                                };
+            }else
+                // if(Attendance::where([
+                //     ['user_id', '=', $user->id],
+                //     ['date', '=', $yyyy_mm_dd]
+                //     ])->has('rest'))
+                    //         if(Attendance::where([
+                    //             ['user_id', '=', $user->id],
+                    //             ['date', '=', $yyyy_mm_dd]
+                    //             ])->rest->chkNotFilledRestEnd())
+        {
+            $attendance_id = Attendance::where([
+                ['user_id', '=', $user->id],
+                ['date', '=', $yyyy_mm_dd]
+                ])->first()->id;
+            $flag_wstart = 'disabled';
+            $flag_wend = 'disabled';
+            $flag_rstart = 'disabled';
+        }
+
         $param = [
+            'attendance_id'=>$attendance_id,
             'user_name'=>$user_name, 
             'yyyy_mm_dd'=>$yyyy_mm_dd , 
             'flag_wstart'=>$flag_wstart,

@@ -27,8 +27,8 @@ Route::get('login', [AttendanceController::class, 'login']);
 Route::post('login', [AttendanceController::class, 'checkUser']);
 Route::get('register', [AttendanceController::class, 'register']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

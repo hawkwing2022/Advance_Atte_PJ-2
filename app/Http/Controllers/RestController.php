@@ -13,17 +13,18 @@ class RestController extends Controller
     {
         $date = date_format(Carbon::now(), 'Ymd' );
         $start_time = date_format(Carbon::now(), 'H:i:s');
-        $form = ['date'=>$date, 'start_time'=>$start_time ];
-        Attendance::create($form);
+        $form = ['attendance_id'=>$request->attendance_id, 'date'=>$date, 'start_time'=>$start_time ];
+        Rest::create($form);
         return redirect('/');
     }
 
     public function end(Reqeust $request)
     {
-        $attendance_id = Attendance::id();
+        dd($request);
+        $date = date_format(Carbon::now(), 'Ymd' );
         $end_time = date_format(Carbon::now(), 'H:i:s');
         Rest::where([
-            ['attendance_id', '=', $attendance_id],
+            ['attendance_id', '=', $request->attendance_id],
             ['end_time', '=', null],
             ])->update(['end_time'=>$end_time]);
         return redirect('/');
