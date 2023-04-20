@@ -18,9 +18,8 @@ class RestController extends Controller
         return redirect('/');
     }
 
-    public function end(Reqeust $request)
+    public function end(Request $request)
     {
-        dd($request);
         $date = date_format(Carbon::now(), 'Ymd' );
         $end_time = date_format(Carbon::now(), 'H:i:s');
         Rest::where([

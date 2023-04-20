@@ -47,11 +47,31 @@
       <td>{{ $attendance->user->getName() }}</td>
       <td>{{ $attendance->start_time }}</td>
       <td>{{ $attendance->end_time}}</td>
-      <td>{{ $attendance->rest_period}}</td>
-      <td>@if($attendance->end_time != null )
-        <?php date_default_timezone_set('UTC') ?>
-        {{ date('H:i:s', (strtotime($attendance->end_time) - strtotime($attendance->start_time)) ) }}@else 打刻漏れ
+      <?php $Sum_rest_period = null; ?>
+      <td>
+        @if( $attendance->rest != null )
+        @foreach ($attendance->rests as $rest)
+        @if( $attendance->rest->getRestEnd() != null )
+        <?php $Sum_rest_period += $attendance->rest->getRest_period(); ?>
+        @else
+        休憩中
+        @endif
+        @endforeach
+        <?php date_default_timezone_set('UTC');?>
+        {{ date('H:i:s', $Sum_rest_period) }}
         <?php date_default_timezone_set('Asia/Tokyo') ?>
+        @elseif( $attendance->rest != null && $attendance->rest->getRestEnd() == null && $yyyy_mm_dd == date('Y-m-d') )
+        休憩中
+        @endif
+      </td>
+      <td>@if($attendance->end_time != null )
+        <?php date_default_timezone_set('UTC');?>
+        {{ date('H:i:s', (strtotime($attendance->end_time) - strtotime($attendance->start_time)) ) }}
+        <?php date_default_timezone_set('Asia/Tokyo') ?>
+        @elseif( $yyyy_mm_dd != date('Y-m-d') )
+        打刻漏れ
+        @else
+        勤務中
         @endif</td>
     </tr>
     @endforeach

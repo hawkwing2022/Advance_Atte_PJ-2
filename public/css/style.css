@@ -196,3 +196,7 @@ td {
   height: 200px;
   margin-right: 0;
   }
+
+.page-item {
+  background-color: #FFFFFF;
+}

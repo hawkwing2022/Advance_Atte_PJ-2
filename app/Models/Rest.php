@@ -11,14 +11,25 @@ class Rest extends Model
 
     protected $fillable = ['attendance_id', 'date', 'start_time'];
 
-        public function attendance()
+    public function attendance()
     {
         return $this->belongsTo('App\Models\Attendance');
     }
 
-    public function chkNotFilledRestEnd(Request $request)
+    // public function chkNotFilledRestEnd(Request $request)
+    // {
+    //     $boolean = Rest::where($request)->whereNull('end_time')->count() != 0;
+    //     return $boolean;
+    // }
+
+    public function getRest_period()
     {
-        $boolean = Rest::where($request)->whereNull('end_time')->count() != 0;
-        return $boolean;
+        $rest_period = strtotime($this->end_time) - strtotime($this->start_time);
+        return $rest_period;
+    }
+
+    public function getRestEnd()
+    {
+        return $this->end_time;
     }
 }

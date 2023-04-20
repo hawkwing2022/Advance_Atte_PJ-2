@@ -42,23 +42,19 @@ class AttendanceController extends Controller
             ['user_id', '=', $user->id],
             ['date', '=', $yyyy_mm_dd]
             ])->has('rest')->count() == 0){
+            $attendance_id = $attendances->first()->id;
+            $flag_wstart = 'disabled';
+            $flag_rend = 'disabled';
+        }elseif(Rest::where([
+                ['attendance_id', '=', $attendances->first()->id],
+                ['date', '=', $yyyy_mm_dd],
+                ['end_time', '=', null]
+                ])->count() == 0){
                 $attendance_id = $attendances->first()->id;
                 $flag_wstart = 'disabled';
                 $flag_rend = 'disabled';
-            }else
-                // if(Attendance::where([
-                //     ['user_id', '=', $user->id],
-                //     ['date', '=', $yyyy_mm_dd]
-                //     ])->has('rest'))
-                    //         if(Attendance::where([
-                    //             ['user_id', '=', $user->id],
-                    //             ['date', '=', $yyyy_mm_dd]
-                    //             ])->rest->chkNotFilledRestEnd())
-        {
-            $attendance_id = Attendance::where([
-                ['user_id', '=', $user->id],
-                ['date', '=', $yyyy_mm_dd]
-                ])->first()->id;
+        }else{
+            $attendance_id = $attendances->first()->id;
             $flag_wstart = 'disabled';
             $flag_wend = 'disabled';
             $flag_rstart = 'disabled';

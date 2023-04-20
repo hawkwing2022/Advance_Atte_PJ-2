@@ -34,11 +34,11 @@
   </form>
   <form method="POST" action="rest/start">
     @csrf
-    <button class="rest_start" name="attendance_id" value="{{ $attendance_id }}" {{$flag_rstart}}>休憩開始</button>
+    <button class="rest_start" name="attendance_id" value="{{ $attendance_id }}" {{ $flag_rstart }}>休憩開始</button>
   </form>
   <form method="POST" action="rest/end">
     @csrf
-    <button class="rest_end" name="attendance_id" value="{{ $attendance_id }}" {{$flag_rend}}>休憩終了</button>
+    <button class="rest_end" name="attendance_id" value="{{ $attendance_id }}" {{ $flag_rend }}>休憩終了</button>
   </form>
 </div>
 @endsection
