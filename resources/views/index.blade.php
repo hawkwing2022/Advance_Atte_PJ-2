@@ -3,13 +3,13 @@
 @section('header')
 <div class="nav">
   <ul>
-    <li class="home_link">
+    <li class="link">
       <a href="{{ route('index') }}">ホーム</a>
     </li>
-    <li class="list_link">
+    <li class="link">
       <a href="{{ route('list', ['yyyy_mm_dd'=>$yyyy_mm_dd]) }}">日付一覧</a>
     </li>
-    <li class="logout_link">
+    <li class="link">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();">ログアウト</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

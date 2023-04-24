@@ -30,6 +30,7 @@ class Rest extends Model
 
     public function getRestEnd()
     {
+        if($this->id == 19){dd($this->end_time);}
         return $this->end_time;
     }
 }

@@ -67,7 +67,7 @@ class AttendanceController extends Controller
             'flag_wstart'=>$flag_wstart,
             'flag_wend'=>$flag_wend,
             'flag_rstart'=>$flag_rstart,
-            'flag_rend'=>$flag_rend,
+            'flag_rend'=>$flag_rend
         ];
         return view('index', $param);
     }
@@ -98,7 +98,7 @@ class AttendanceController extends Controller
     {
         $date = $request->yyyy_mm_dd;
         $attendances = Attendance::where('date', '=', $date)->orderBy('user_id')->Paginate(5);
-        $param = ['attendances'=>$attendances, 'yyyy_mm_dd'=>$date];
+        $param = ['attendances'=>$attendances, 'yyyy_mm_dd'=>$date ];
         return view('list', $param);
     }
 

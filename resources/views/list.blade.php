@@ -3,13 +3,13 @@
 @section('header')
 <div class="nav">
   <ul>
-    <li class="home_link">
+    <li class="link">
       <a href="{{ route('index') }}">ホーム</a>
     </li>
-    <li class="list_link">
+    <li class="link">
       <a href="{{ route('list', ['yyyy_mm_dd'=>$yyyy_mm_dd]) }}">日付一覧</a>
     </li>
-    <li class="logout_link">
+    <li class="link">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();">ログアウト</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -47,21 +47,25 @@
       <td>{{ $attendance->user->getName() }}</td>
       <td>{{ $attendance->start_time }}</td>
       <td>{{ $attendance->end_time}}</td>
-      <?php $Sum_rest_period = null; ?>
       <td>
-        @if( $attendance->rest != null )
+        <?php $Sum_rest_period = null; ?>
+        @if($attendance->rest == null)
+        無休
+        @else
+        @if( ($attendance->rest != null) && ($attendance->rest->getRestEnd() == null) && ($yyyy_mm_dd == date('Y-m-d')) )
+        休憩中:1回目
+        @else
         @foreach ($attendance->rests as $rest)
         @if( $attendance->rest->getRestEnd() != null )
         <?php $Sum_rest_period += $attendance->rest->getRest_period(); ?>
         @else
-        休憩中
+        <? $Sum_rest_period = '休憩中:2回目以降'; ?>
         @endif
         @endforeach
         <?php date_default_timezone_set('UTC');?>
         {{ date('H:i:s', $Sum_rest_period) }}
-        <?php date_default_timezone_set('Asia/Tokyo') ?>
-        @elseif( $attendance->rest != null && $attendance->rest->getRestEnd() == null && $yyyy_mm_dd == date('Y-m-d') )
-        休憩中
+        <?php date_default_timezone_set('Asia/Tokyo');?>
+        @endif
         @endif
       </td>
       <td>@if($attendance->end_time != null )
