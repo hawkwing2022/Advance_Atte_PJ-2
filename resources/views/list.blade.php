@@ -29,7 +29,7 @@
 
   <form class="date_change_btn_form" method="GET" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd +1 day")) ]) }}">
     @csrf
-    <button class="date_change_btn">＞</button>
+    <button class="date_change_btn" @if( $yyyy_mm_dd != date('Y-m-d') ) @else disabled @endif>＞</button>
   </form>
 </div>
 <div class="list_content">

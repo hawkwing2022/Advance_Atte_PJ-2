@@ -12,8 +12,8 @@
 
     <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
-{{ 'motono'}}
-    <form class="login_form" method="POST" action="login">
+{{ $text }}
+    <form class="login_form" method="POST" action="auth">
         @csrf
         <input class="box input_box" type="email" name="email" placeholder="メールアドレス" />
         <input class="box input_box" type="password" name="password" placeholder="パスワード" />
@@ -21,7 +21,7 @@
     </form>
     <div class="box redirect_msg">
         <p>アカウントをお持ちでない方はこちらから</p>
-        <a href="/register">会員登録</a>
+        <a href="/registration">会員登録</a>
     </div>
 </div>
 @endsection

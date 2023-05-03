@@ -196,13 +196,18 @@ td {
   height: 200px;
   }
 
+.pagination {
+  letter-spacing: -1em;
+}
 .page-item {
   display: inline-block;
   background-color: #FFFFFF;
-  border: 1px solid #000000;
   width: 3.5vw;
   height: 5vh;
+  line-height: 5vh;
   text-align: center;
+  margin: 1px;
+  letter-spacing: 0;
 }
 
 .active {

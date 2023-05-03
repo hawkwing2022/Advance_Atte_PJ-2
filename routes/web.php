@@ -23,12 +23,10 @@ Route::post('/rest/start', [RestController::class, 'start'])->middleware(['auth'
 Route::post('/rest/end', [RestController::class, 'end'])->middleware(['auth']);
 Route::get('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
 Route::get('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
-Route::get('login', [AttendanceController::class, 'login']);
-Route::post('login', [AttendanceController::class, 'checkUser']);
-Route::get('register', [AttendanceController::class, 'register']);
+Route::get('/auth', [AttendanceController::class, 'login'])->name('auth');
+Route::post('/auth', [AttendanceController::class, 'checkUser']);
+Route::get('/registration', [AttendanceController::class, 'register']);
+Route::post('/registration', [AttendanceController::class, 'registration'])->name('registration');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
