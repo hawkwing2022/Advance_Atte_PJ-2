@@ -9,13 +9,26 @@
     </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <!-- Validation Errors -->
-    <x-auth-validation-errors class="mb-4" :errors="$errors" />
-{{ $text }}
+    {{ $text }}
+@if(count($errors) > 0)
+    <p>入力内容に問題があります</p>
+@endif
     <form class="login_form" method="POST" action="auth">
         @csrf
+        @error('email')
+        <tr>
+            <th>ERROR:</th>
+            <td>{{ $message }}</td>
+        </tr>
+        @enderror
         <input class="box input_box" type="email" name="email" placeholder="メールアドレス" />
+
+        @error('password')
+        <tr>
+            <th>ERROR:</th>
+            <td>{{ $message }}</td>
+        </tr>
+        @enderror
         <input class="box input_box" type="password" name="password" placeholder="パスワード" />
         <button class="box auth_btn">ログイン</button>
     </form>

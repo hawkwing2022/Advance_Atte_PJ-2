@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RestController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +23,12 @@ Route::post('/work/end', [AttendanceController::class, 'end'])->middleware(['aut
 Route::post('/rest/start', [RestController::class, 'start'])->middleware(['auth']);
 Route::post('/rest/end', [RestController::class, 'end'])->middleware(['auth']);
 Route::get('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
-Route::get('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
-Route::get('/auth', [AttendanceController::class, 'login'])->name('auth');
-Route::post('/auth', [AttendanceController::class, 'checkUser']);
-Route::get('/registration', [AttendanceController::class, 'register']);
-Route::post('/registration', [AttendanceController::class, 'registration'])->name('registration');
+Route::post('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
+Route::post('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
+Route::get('/auth', [AuthController::class, 'login'])->name('auth');
+Route::post('/auth', [AuthController::class, 'checkUser']);
+Route::get('/registration', [AuthController::class, 'register']);
+Route::post('/registration', [AuthController::class, 'registration'])->name('registration');
 
 
 require __DIR__.'/auth.php';

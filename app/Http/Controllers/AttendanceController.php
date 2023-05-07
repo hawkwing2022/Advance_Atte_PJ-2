@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Attendance;
-use APP\Models\User;
-use APP\Models\Rest;
+use App\Models\User;
+use App\Models\Rest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Illuminate\Validation\Rules;
 
 
 class AttendanceController extends Controller
@@ -108,71 +107,4 @@ class AttendanceController extends Controller
         $paginate->page = $page;
         view('date', ['page'->$page]);
     }
-
-    public function login(Request $request)
-    {
-        $text = ['text' => 'NEW'];
-        return view('auth', $text);
-
-    }
-
-    public function checkUser(Request $request)
-    {
-        $email = $request->email;
-        $password = $request->password;
-        if (Auth::attempt(['email' => $email,
-        'password' => $password])) {
-            return redirect ('/');
-        } else {
-            $text = '入力情報が誤っています';
-        }
-        return view('auth', ['text' => $text]);
-    }
-
-    public function register()
-    {
-        return view('registration');
-    }
-
-    public function registration(Request $request)
-        {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
-    }
-    // {
-    //     $name = $request->name;
-    //     $email = $request->email;
-    //     $password = $request->password;
-
-    //     if (User::where('name', '=', $name)->count() != 0 ){
-    //         $text = '既に名前が登録されています';
-    //     } elseif (Auth::where('email', '=', $email)->count() != 0){
-    //         $text = '既にメールアドレスが登録されています';
-    //     } else
-    //     {}
-
-    //     if ($password != $request->password_confirmation){
-    //         $text = 'パスワードが確認欄の内容と一致しません';
-    //     } else {
-    //         $text = 'OK';
-    //     }
-
-        
-    //     return view('registration', ['text' => $text]);
-    // }
 }

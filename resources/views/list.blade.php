@@ -21,13 +21,13 @@
 @endsection
 @section('main')
 <div class="content_title">
-  <form class="date_change_btn_form" method="GET" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd -1 day")) ]) }}">
+  <form class="date_change_btn_form" method="POST" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd -1 day")) ]) }}">
     @csrf
     <button class="date_change_btn">＜</button>
   </form>
   <p class="date_title">{{$yyyy_mm_dd}}</p>
 
-  <form class="date_change_btn_form" method="GET" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd +1 day")) ]) }}">
+  <form class="date_change_btn_form" method="POST" action="{{ route('list', ['yyyy_mm_dd'=>date('Y-m-d', strtotime("$yyyy_mm_dd +1 day")) ]) }}">
     @csrf
     <button class="date_change_btn" @if( $yyyy_mm_dd != date('Y-m-d') ) @else disabled @endif>＞</button>
   </form>
