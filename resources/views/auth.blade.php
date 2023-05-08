@@ -9,9 +9,10 @@
     </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+
     {{ $text }}
 @if(count($errors) > 0)
-    <p>入力内容に問題があります</p>
+    <p>入力内容に問題があります2</p>
 @endif
     <form class="login_form" method="POST" action="auth">
         @csrf

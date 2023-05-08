@@ -16,9 +16,8 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $text = ['text' => 'NEW'];
-        return view('auth', $text);
-
+        $text = '';
+        return view('auth', ['text' => $text]);
     }
 
     public function checkUser(AuthRequest $request)
@@ -29,7 +28,7 @@ class AuthController extends Controller
         'password' => $password])) {
             return redirect ('/');
         } else {
-            $text = '入力情報が誤っています';
+            $text = '入力情報が誤っています1';
         }
         return view('auth', ['text' => $text]);
     }
@@ -41,7 +40,6 @@ class AuthController extends Controller
 
     public function registration(RegistrationRequest $request)
         {
-            dd($request);
             $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
