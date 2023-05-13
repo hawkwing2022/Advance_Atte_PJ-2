@@ -4,6 +4,9 @@
 <div class="nav">
   <ul>
     <li class="link">
+      <a href="{{ route('users') }}">ユーザー一覧</a>
+    </li>
+    <li class="link">
       <a href="{{ route('index') }}">ホーム</a>
     </li>
     <li class="link">

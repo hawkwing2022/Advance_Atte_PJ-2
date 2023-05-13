@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RestController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,9 @@ Route::get('/auth', [AuthController::class, 'login'])->name('auth');
 Route::post('/auth', [AuthController::class, 'checkUser']);
 Route::get('/registration', [AuthController::class, 'register']);
 Route::post('/registration', [AuthController::class, 'registration'])->name('registration');
+Route::get('/users', [UsersController::class, 'users'])->middleware(['auth'])->name('users');
+Route::post('/users', [UsersController::class, 'users'])->middleware(['auth'])->name('users');
+
 
 
 require __DIR__.'/auth.php';
