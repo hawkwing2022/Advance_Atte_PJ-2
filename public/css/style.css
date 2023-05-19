@@ -61,7 +61,7 @@ main {
 }
 
 footer {
-  height: 50px;
+  height: 30px;
   background-color: #FFFFFF;
 }
 
@@ -221,5 +221,59 @@ td {
 }
 
 .active .page-link {
+  color: #FFFFFF;
+}
+
+.userlist_title{
+  font-weight: bold;
+}
+
+.user_list_content {
+  justify-content: center;
+  width: 1080px;
+  height: 400px;
+  padding: 0 13vw;
+  text-align: center;
+}
+
+.user_list_cont_table {
+  display: grid;
+  width: 100%;
+}
+
+.user_list_cont_table tr {
+  border-top: 0.8px solid #000000;
+  margin: 100px;
+  height: 70px;
+}
+
+th {
+  vertical-align: middle;
+  padding-left: 35px;
+  font-size: 12pt;
+  column-width: 280px;
+}
+
+td {
+  vertical-align: middle;
+  padding-left: 35px;
+  font-size: 11pt;
+}
+
+.eachList_title {
+  font-weight: bold;
+}
+
+.eachList_btn_form {
+  display: inline-block;
+}
+
+.eachList_btn {
+  width: 130px;
+  height: 40px;
+  font-weight: bold;
+  border: none;
+  background-color: #274bdb;
+  justify-content: center;
   color: #FFFFFF;
 }

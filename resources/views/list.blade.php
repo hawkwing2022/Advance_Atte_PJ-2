@@ -4,13 +4,13 @@
 <div class="nav">
   <ul>
     <li class="link">
-      <a href="{{ route('users') }}">ユーザー一覧</a>
-    </li>
-    <li class="link">
       <a href="{{ route('index') }}">ホーム</a>
     </li>
     <li class="link">
       <a href="{{ route('list', ['yyyy_mm_dd'=>$yyyy_mm_dd]) }}">日付一覧</a>
+    </li>
+        <li class="link">
+      <a href="{{ route('users') }}">ユーザー一覧</a>
     </li>
     <li class="link">
       <a href="{{ route('logout') }}" onclick="event.preventDefault();

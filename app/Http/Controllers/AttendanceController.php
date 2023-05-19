@@ -105,6 +105,6 @@ class AttendanceController extends Controller
     public function page(Request $request)
     {
         $paginate->page = $page;
-        view('date', ['page'->$page]);
+        view('list', ['page'->$page]);
     }
 }
