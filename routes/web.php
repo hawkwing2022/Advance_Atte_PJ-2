@@ -18,23 +18,24 @@ use App\Http\Controllers\UsersController;
 */
 
 
-Route::get('/', [AttendanceController::class, 'index'])->middleware(['auth'])->name('index');
-Route::post('/work/start', [AttendanceController::class, 'start'])->middleware(['auth']);
-Route::post('/work/end', [AttendanceController::class, 'end'])->middleware(['auth']);
-Route::post('/rest/start', [RestController::class, 'start'])->middleware(['auth']);
-Route::post('/rest/end', [RestController::class, 'end'])->middleware(['auth']);
-Route::get('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
-Route::post('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->middleware(['auth'])->name('list');
-Route::post('/list/page{num}', [AttendanceController::class, 'page'])->middleware(['auth']);
+Route::group(['middleware' => 'auth'],function(){
+  Route::get('/', [AttendanceController::class, 'index'])->name('index');
+  Route::post('/work/start', [AttendanceController::class, 'start']);
+  Route::post('/work/end', [AttendanceController::class, 'end']);
+  Route::post('/rest/start', [RestController::class, 'start']);
+  Route::post('/rest/end', [RestController::class, 'end']);
+  Route::get('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->name('list');
+  Route::post('/list/{yyyy_mm_dd}', [AttendanceController::class, 'list'])->name('list');
+  Route::post('/list/page{num}', [AttendanceController::class, 'page']);
+  Route::get('/users', [UsersController::class, 'users'])->name('users');
+  Route::post('/users/page{num}', [UsersController::class, 'page']);
+  Route::get('/eachList/{user_id}', [UsersController::class, 'eachList'])->name('eachList');
+  Route::post('/eachList/{user_id}', [UsersController::class, 'eachList'])->name('eachList');
+});
+
 Route::get('/auth', [AuthController::class, 'login'])->name('auth');
 Route::post('/auth', [AuthController::class, 'checkUser']);
 Route::get('/registration', [AuthController::class, 'register']);
 Route::post('/registration', [AuthController::class, 'registration'])->name('registration');
-Route::get('/users', [UsersController::class, 'users'])->middleware(['auth'])->name('users');
-Route::post('/users/page{num}', [UsersController::class, 'page'])->middleware(['auth']);
-Route::get('/eachList/{user_id}', [UsersController::class, 'eachList'])->middleware(['auth'])->name('eachList');
-Route::post('/eachList/{user_id}', [UsersController::class, 'eachList'])->middleware(['auth'])->name('eachList');
-
-
 
 require __DIR__.'/auth.php';

@@ -11,7 +11,26 @@
 <body>
   <header class="header">
     <h1>Atte</h1>
-    @yield('header')
+    <div class="nav">
+      <ul>
+        <li class="link">
+          <a href="{{ route('index') }}">ホーム</a>
+        </li>
+        <li class="link">
+          <a href="{{ route('list', ['yyyy_mm_dd'=>$yyyy_mm_dd]) }}">日付一覧</a>
+        </li>
+        <li class="link">
+          <a href="{{ route('users') }}">ユーザー一覧</a>
+        </li>
+        <li class="link">
+          <a href="{{ route('logout') }}" onclick="event.preventDefault();
+          document.getElementById('logout-form').submit();">ログアウト</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+        </form>
+        </li>
+      </ul>
+    </div>
   </header>
   <main class="main">
     @yield('main')
