@@ -52,25 +52,4 @@ class AuthController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
-    // {
-    //     $name = $request->name;
-    //     $email = $request->email;
-    //     $password = $request->password;
-
-    //     if (User::where('name', '=', $name)->count() != 0 ){
-    //         $text = '既に名前が登録されています';
-    //     } elseif (Auth::where('email', '=', $email)->count() != 0){
-    //         $text = '既にメールアドレスが登録されています';
-    //     } else
-    //     {}
-
-    //     if ($password != $request->password_confirmation){
-    //         $text = 'パスワードが確認欄の内容と一致しません';
-    //     } else {
-    //         $text = 'OK';
-    //     }
-
-        
-    //     return view('registration', ['text' => $text]);
-    // }
 }
